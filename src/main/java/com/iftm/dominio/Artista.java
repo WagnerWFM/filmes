@@ -33,9 +33,9 @@ public class Artista implements Serializable{
 		participacoes = new ArrayList<>();
 	}
 
-	public Artista(Integer codAtista, String nome, String nacionalidade, BigDecimal cache, Date nascimento) {
+	public Artista(Integer codArtista, String nome, String nacionalidade, BigDecimal cache, Date nascimento) {
 		super();
-		this.codArtista = codAtista;
+		this.codArtista = codArtista;
 		this.nome = nome;
 		this.nacionalidade = nacionalidade;
 		this.cache = cache;
@@ -52,7 +52,7 @@ public class Artista implements Serializable{
 		this.participacoes.remove(x);
 	}
 	
-	public Integer getCodAtista() {
+	public Integer getCodArtista() {
 		return codArtista;
 	}
 

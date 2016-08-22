@@ -5,9 +5,6 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,6 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import com.iftm.dominio.Artista;
 import com.iftm.dominio.Filme;
 import com.iftm.dominio.Participacao;
+
+import servico.ArtistaServico;
+import servico.FilmeServico;
+import servico.ParticipacaoServico;
 
 @WebServlet("/Instanciacao")
 public class Instanciacao extends HttpServlet implements Servlet {
@@ -41,26 +42,23 @@ public class Instanciacao extends HttpServlet implements Servlet {
 			Participacao p3 = new Participacao(null, "Rose Bukater", new BigDecimal("1000000.00"), f2, a3);
 			Participacao p4 = new Participacao(null, "Katharine Hepbum", new BigDecimal("500000.00"), f1, a2 );
 			
-			EntityManagerFactory emf = Persistence.createEntityManagerFactory("meujpa"); //meujpa: foi dado no persistence.xml
-			EntityManager em = emf.createEntityManager();
+			//aplicação comunica com a camada de serviço, que comunica com a dao.
 			
-			em.getTransaction().begin();
+			ArtistaServico as = new ArtistaServico();
+			FilmeServico fs = new FilmeServico();
+			ParticipacaoServico ps = new ParticipacaoServico();
 			
-			em.persist(f1);
-			em.persist(f2);
-			em.persist(a1);
-			em.persist(a2);
-			em.persist(a3);
-			em.persist(p1);
-			em.persist(p2);
-			em.persist(p3);
-			em.persist(p4);
+			fs.inserirAtualizar(f1);
+			fs.inserirAtualizar(f2);
 			
-			em.getTransaction().commit();
-			
-			em.close();
-			emf.close();
-			
+			as.inserirAtualizar(a1);
+			as.inserirAtualizar(a2);
+			as.inserirAtualizar(a3);
+
+			ps.inserirAtualizar(p1);
+			ps.inserirAtualizar(p2);
+			ps.inserirAtualizar(p3);
+			ps.inserirAtualizar(p4);
 			
 			response.getWriter().append("Pronto! ");
 		} catch (ParseException e) {
